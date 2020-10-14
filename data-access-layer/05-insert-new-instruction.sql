@@ -41,5 +41,6 @@
 --   «positional parameter»,
 -- )
 
+SELECT COALESCE (max(list_order+1)) 
+FROM instructions 
 
--- YOUR CODE HERE
