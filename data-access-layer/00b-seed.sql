@@ -8,11 +8,7 @@
 -- user.
 
 -- YOUR CODE HERE
-
-
-
-
-
+SET ROLE recipe_box_app;
 
 -- Create a table for the "recipes". It will need the following columns in it.
 -- The "PK" in the constraints column means the column is a "primary key". The
@@ -25,11 +21,12 @@
 -- | updated     | TIMESTAMP    | NOT NULL, DEFAULT CURRENT_TIMESTAMP |
 
 -- YOUR CODE HERE
-
-
-
-
-
+CREATE TABLE recipes (id SERIAL, 
+title VARCHAR(200) NOT NULL, 
+created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+);
 
 -- Create a table for the "instructions". It will need the following columns in
 -- it. The "PK" in the constraints column means the column is a "primary key".
@@ -47,10 +44,13 @@
 -- | recipe_id     | INTEGER     | FK, NOT NULL |
 
 -- YOUR CODE HERE
-
-
-
-
+CREATE TABLE instructions (id SERIAL,
+specification TEXT NOT NULL,
+list_order INTEGER NOT NULL,
+recipe_id INTEGER NOT NULL, 
+PRIMARY KEY (id),
+FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
 
 
 -- Create a table for the "units_of_measure". It will need the following columns
@@ -63,11 +63,8 @@
 -- | name        | VARCHAR(20) | NOT NULL    |
 
 -- YOUR CODE HERE
-
-
-
-
-
+CREATE TABLE units_of_measure (id SERIAL, name VARCHAR(20) NOT NULL,
+PRIMARY KEY (id));
 
 -- Create a table for the "ingredients". It will need the following columns in
 -- it. The "PK" in the constraints column means the column is a "primary key".
@@ -86,12 +83,15 @@
 -- | recipe_id          | INTEGER       | FK, NOT NULL |
 
 -- YOUR CODE HERE
-
-
-
-
-
-
+CREATE TABLE ingredients (id SERIAL,
+amount NUMERIC(5,2),
+unit_of_measure_id INTEGER,
+food_stuff VARCHAR(500) NOT NULL,
+recipe_id INTEGER NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (unit_of_measure_id) REFERENCES units_of_measure(id),
+FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
 
 -- HERE BEGINS THE SEED DATA
 
